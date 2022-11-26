@@ -68,8 +68,9 @@ def cms():
             stp = 2
             details = event_schedule(stp, lt)
             stp = 3
-            lt = atd_talk_search(details[0],details[1],details[2])
-            event_schedule(stp, lt)
+            if not details == 0:
+                lt = atd_talk_search(details[0],details[1],details[2])
+                event_schedule(stp, lt)
 
         elif chs==6:
             Guidelines()

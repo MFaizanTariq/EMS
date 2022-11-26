@@ -159,7 +159,7 @@ def event_schedule(stp, lt):
             return ev_id, sr_md, sr_par
         print('----------------------------------')
         input()
-        return
+        return 0
 
     elif stp == 3:
         if lt:

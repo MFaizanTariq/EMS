@@ -224,13 +224,25 @@ def atd_event_search(attend_name, attend_pass):
 
 def atd_talk_search(ev_id, sr_md, sr_par):
     lt = []
-    if sr_md == 2:
+
+    if sr_md == 1:
+        sr_par = datetime.strptime(sr_par, '%Y-%m-%d').date()
+        tks = session.query(Talk).filter(Talk.tk_ev == ev_id)
+
+        for tk in tks:
+            if tk:
+                tk_date = tk.tk_sdt.date()
+                if sr_par == tk_date:
+                    lt.append([tk.tk_name, tk.tk_room, tk.spker.spk_name, tk.tk_sdt, tk.tk_edt])
+
+        return lt
+
+    elif sr_md == 2:
         sr_par = int(sr_par)
         tks = session.query(Talk).filter(Talk.tk_ev == ev_id, Talk.tk_room ==sr_par)
 
         for tk in tks:
             if tk:
                 lt.append([tk.tk_name, tk.tk_room, tk.spker.spk_name, tk.tk_sdt, tk.tk_edt])
-            return lt
 
         return lt
