@@ -1,5 +1,5 @@
 from venv.models import engine, Add_Organizer, Add_Attendee, database_create
-from venv.models import Add_Speaker, Add_Event, Add_Talk, Event_List, add_to_event, atd_event_search
+from venv.models import Add_Speaker, Add_Event, Add_Talk, Event_List, add_to_event, atd_event_search, atd_talk_search
 from venv.views import *
 from sqlalchemy import insert, select
 from sqlalchemy.orm import sessionmaker
@@ -22,11 +22,11 @@ def ems():
                 Add_Organizer(details[1], details[2])
                 os.system('cls')
                 print('Organizer successfully added')
-            if details[0]==2:
+            elif details[0]==2:
                 Add_Attendee(details[1], details[2])
                 os.system('cls')
                 print('Attendee successfully added')
-            if details[0]==3:
+            elif details[0]==3:
                 Add_Speaker(details[1], details[2])
                 os.system('cls')
                 print('Speaker successfully added')
@@ -66,6 +66,9 @@ def ems():
             details = event_schedule(stp, '')
             lt = atd_event_search(details[0],details[1])
             stp = 2
+            details = event_schedule(stp, lt)
+            stp = 3
+            lt = atd_talk_search(details[0],details[1],details[2])
             event_schedule(stp, lt)
 
         elif chs==6:

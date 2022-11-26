@@ -121,15 +121,35 @@ def event_schedule(stp, lt):
 
     elif stp == 2:
         if lt:
-            print('Name   Start Date    End Date')
+            print('ID #  Name   Start Date    End Date')
             print('----------------------------------')
             sz = len(lt)
             for a in range(sz):
-                print(lt[a][0], '  ', lt[a][1], '  ', lt[a][2])
+                print(lt[a][0],' ', lt[a][1],' ', lt[a][2],' ', lt[a][3])
             print('----------------------------------')
-            input()
-            return
-        print('Attendee name / passcode combination not found')
+            print('Choose event id for displaying schedule:')
+            ev_id = int(input())
+            print('Choose method for search (1: date, 2: room #)')
+            sr_md = int(input())
+            if sr_md == 1:
+                print('Mention Date:')
+                sr_par = input()
+            elif sr_md == 2:
+                print('Mention Room #:')
+                sr_par = input()
+            return ev_id, sr_md, sr_par
         print('----------------------------------')
         input()
+        return
 
+    elif stp == 3:
+        if lt:
+            print('Name   Room #    Speaker #      Start Time       End Time')
+            print('----------------------------------')
+            sz = len(lt)
+            for a in range(sz):
+                print(lt[a][0],' ', lt[a][1],' ', lt[a][2],' ', lt[a][3],' ', lt[a][4])
+            print('----------------------------------')
+        print('----------------------------------')
+        input()
+        return

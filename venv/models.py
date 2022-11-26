@@ -216,8 +216,21 @@ def atd_event_search(attend_name, attend_pass):
 
         for ev in evs:
             ev = session.query(Event).filter(Event.id == ev.ev_id).first()
-            lt.append([ev.ev_name, ev.ev_sdate, ev.ev_edate])
+            lt.append([ev.id, ev.ev_name, ev.ev_sdate, ev.ev_edate])
 
         return lt
 
     return lt
+
+def atd_talk_search(ev_id, sr_md, sr_par):
+    lt = []
+    if sr_md == 2:
+        sr_par = int(sr_par)
+        tks = session.query(Talk).filter(Talk.tk_ev == ev_id, Talk.tk_room ==sr_par)
+
+        for tk in tks:
+            if tk:
+                lt.append([tk.tk_name, tk.tk_room, tk.spker.spk_name, tk.tk_sdt, tk.tk_edt])
+            return lt
+
+        return lt
