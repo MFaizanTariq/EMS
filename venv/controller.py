@@ -8,12 +8,10 @@ import os
 Session = sessionmaker(bind = engine)
 session = Session()
 
-def ems():
+def cms():
     database_create()
 
-    code_run = 1
-
-    while code_run == 1:
+    while True:
         chs = Menu()
 
         if chs==1:

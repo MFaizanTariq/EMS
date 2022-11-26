@@ -3,9 +3,9 @@ from datetime import datetime
 
 def Menu():
     os.system('cls')
-    print('----------------------------------')
-    print('Welcome to Event Management System')
-    print('----------------------------------')
+    print('-----------------------------------------')
+    print('Welcome to Conference Management System')
+    print('-----------------------------------------')
     print('1. Register yourself!!!!')
     print('2. Register for an Event')
     print('3. Create new event')
@@ -13,13 +13,13 @@ def Menu():
     print('5. Check schedule of registered events')
     print('6. Guidelines for using the software')
     print('7. Exit')
-    chs =input ()
-    return int(chs)
+    chs = int(input ())
+    return chs
 
 def Guidelines():
     os.system('cls')
     print('------------------------------------------------------------------------')
-    print('                     Welcome to Event Management System')
+    print('                     Welcome to Conference Management System')
     print('------------------------------------------------------------------------')
     print('                         General guidelines for usage')
     print('------------------------------------------------------------------------')
@@ -38,7 +38,7 @@ def Guidelines():
 def Register():
     os.system('cls')
     print('----------------------------------')
-    print('     Event Management System')
+    print('     Conference Management System')
     print('----------------------------------')
     print('  Member registration screen')
     print('----------------------------------')
@@ -56,7 +56,7 @@ def Register():
 def Add_New_Event():
     os.system('cls')
     print('----------------------------------')
-    print('     Event Management System')
+    print('     Conference Management System')
     print('----------------------------------')
     print('     Event addition')
     print('----------------------------------')
@@ -78,7 +78,7 @@ def Add_New_Event():
 def Add_New_Talk():
     os.system('cls')
     print('----------------------------------')
-    print('     Event Management System')
+    print('     Conference Management System')
     print('----------------------------------')
     print('     Talk addition')
     print('----------------------------------')
@@ -107,7 +107,7 @@ def Add_New_Talk():
 def Reg_to_event(all_eves):
     os.system('cls')
     print('----------------------------------')
-    print('     Event Management System')
+    print('  Conference Management System')
     print('----------------------------------')
     print('    Event Registration Screen')
     print('----------------------------------')
@@ -126,7 +126,7 @@ def Reg_to_event(all_eves):
 def event_schedule(stp, lt):
     os.system('cls')
     print('----------------------------------')
-    print('     Event Management System')
+    print('  Conference Management System')
     print('----------------------------------')
     print('     Event schedule search')
     print('----------------------------------')
