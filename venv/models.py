@@ -133,11 +133,11 @@ def Add_Talk(ev_name, tk_name, room_no, spk_name, tk_sdt, tk_edt, og_name, og_pa
     og_chk = 0
     og_chk_cmt = 'Organizer name / passcode not found'
     ev_chk = 0
-    ev_chk_cmt = 'Event name not found'
+    ev_chk_cmt = ' Event name not found'
     ev_og_chk = 0
-    ev_og_chk_cmt = 'You cannot add talk, only organize can add talk'
+    ev_og_chk_cmt = ' You cannot add talk, only organize can add talk'
     spk_chk = 0
-    spk_chk_cmt = 'Speaker name not found'
+    spk_chk_cmt = ' Speaker name not found'
     room_chk = 1
     room_chk_cmt = ' '
     og_id = 0
@@ -153,13 +153,22 @@ def Add_Talk(ev_name, tk_name, room_no, spk_name, tk_sdt, tk_edt, og_name, og_pa
         ev_id = ev.id
         ev_chk = 1
         ev_chk_cmt = ' '
-        room_no_fetch = session.query(Talk).filter(Talk.tk_ev == ev_id, Talk.tk_room == room_no).first()
-        if room_no_fetch:
-            room_chk = 0
-            room_chk_cmt = 'Room already assigned'
+        room_recs = session.query(Talk).filter(Talk.tk_ev == ev_id, Talk.tk_room == room_no)
+
         if ev.ev_og == og_id:
             ev_og_chk = 1
             ev_og_chk_cmt = ' '
+
+        for room_rec in room_recs:
+            if room_rec:
+                s_time = room_rec.tk_sdt
+                e_time = room_rec.tk_edt
+                if tk_sdt >= s_time and tk_sdt <= e_time:
+                    room_chk = 0
+                    room_chk_cmt = ' Room not free in the selected time slot '
+                elif tk_edt >= s_time and tk_edt <= e_time:
+                    room_chk = 0
+                    room_chk_cmt = ' Room not free in the selected time slot '
 
     spk = session.query(Speaker).filter(Speaker.spk_name == spk_name).first()
     if spk:
