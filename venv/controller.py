@@ -72,6 +72,9 @@ def ems():
             event_schedule(stp, lt)
 
         elif chs==6:
+            Guidelines()
+
+        elif chs==7:
             break
 
         else:

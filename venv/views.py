@@ -6,14 +6,33 @@ def Menu():
     print('----------------------------------')
     print('Welcome to Event Management System')
     print('----------------------------------')
-    print('1. Register')
-    print('2. Register for Event')
-    print('3. Register New Event')
-    print('4. Add New Talk to existing event')
+    print('1. Register yourself!!!!')
+    print('2. Register for an Event')
+    print('3. Create new event')
+    print('4. Add new Talk to existing event')
     print('5. Check schedule of registered events')
-    print('6. Exit')
+    print('6. Guidelines for using the software')
+    print('7. Exit')
     chs =input ()
     return int(chs)
+
+def Guidelines():
+    os.system('cls')
+    print('------------------------------------------------------------------------')
+    print('                     Welcome to Event Management System')
+    print('------------------------------------------------------------------------')
+    print('                         General guidelines for usage')
+    print('------------------------------------------------------------------------')
+    print('1. To use the software, you have to register with a name and passcode')
+    print('2. There is no login page, but you could be asked for your passcode for \ncreation / registration')
+    print('3. For creating event / talk register as "Organizer"')
+    print('4. For registering to an event, register as "Attendee"')
+    print('5. Remember your passcode')
+    print('6. For creating talks, ask the concerned speaker to register first')
+    print('----------------------------------')
+    print('Press any key to continue')
+    input ()
+    return
 
 
 def Register():
