@@ -30,6 +30,8 @@ def ems():
                 Add_Speaker(details[1], details[2])
                 os.system('cls')
                 print('Speaker successfully added')
+            print('\nEnter any key to continue... ')
+            input()
 
         elif chs==2:
             all_eves = Event_List()
