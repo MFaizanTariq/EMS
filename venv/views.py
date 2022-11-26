@@ -54,7 +54,7 @@ def Add_New_Event():
     ev_sdate = datetime.strptime(ev_sdate, '%Y-%m-%d').date()
     ev_edate = datetime.strptime(ev_edate, '%Y-%m-%d').date()
 
-    return ev_name, ev_edate, ev_sdate, og_name, og_pass
+    return ev_name, ev_sdate, ev_edate, og_name, og_pass
 
 def Add_New_Talk():
     os.system('cls')
