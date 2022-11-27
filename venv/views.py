@@ -12,8 +12,9 @@ def Menu():
     print('4. Add new Talk to existing event')
     print('5. Check schedule of registered events')
     print('6. Change talk schedule')
-    print('7. Guidelines for using the software')
-    print('8. Exit')
+    print('7. Update Talk title')
+    print('8. Guidelines for using the software')
+    print('9. Exit')
     chs = int(input ())
     return chs
 
@@ -179,7 +180,7 @@ def change_schedule(stp, lt):
     print('----------------------------------')
     print('  Conference Management System')
     print('----------------------------------')
-    print('     Event schedule search')
+    print('     Update talk time')
     print('----------------------------------')
 
     if stp == 1:
@@ -197,7 +198,7 @@ def change_schedule(stp, lt):
             for a in range(sz):
                 print(lt[a][0], ' ', lt[a][1], ' ', lt[a][2], ' ', lt[a][3], ' ', lt[a][4], ' ', lt[a][5], ' ', lt[a][6])
             print('--------------------------------------------------------------------------------')
-            print('Enter talk name for changing schedule')
+            print('Enter talk ID for changing schedule')
             tk_id = int(input())
             print('Mention new start time: (YYYY-MM-DT HH:MM)')
             nw_sdt = input()
@@ -206,4 +207,36 @@ def change_schedule(stp, lt):
             nw_sdt = datetime.strptime(nw_sdt, '%Y-%m-%d %H:%M')
             nw_edt = datetime.strptime(nw_edt, '%Y-%m-%d %H:%M')
             return tk_id, nw_sdt, nw_edt
+        return 0
+
+def update_talk(stp, lt):
+    os.system('cls')
+    print('----------------------------------')
+    print('  Conference Management System')
+    print('----------------------------------')
+    print('     Talk title update')
+    print('----------------------------------')
+
+    if stp == 1:
+        print('Enter your name:')
+        spk_name = input()
+        print('Enter your passcode')
+        spk_pass = input()
+        return spk_name, spk_pass
+
+    elif stp == 2:
+        if lt:
+            print('Talk ID    Talk Name      Start Time       End Time')
+            print('-----------------------------------------------------------------')
+            sz = len(lt)
+            for a in range(sz):
+                print(lt[a][0], ' ', lt[a][1], ' ', lt[a][2], ' ', lt[a][3])
+            print('-----------------------------------------------------------------')
+            print('Enter talk id for changing title')
+            tk_id = int(input())
+            print('Enter new title')
+            nw_title = input()
+            return tk_id, nw_title
+        print('No assigned talk found')
+        input()
         return 0

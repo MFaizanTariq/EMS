@@ -1,7 +1,7 @@
 from venv.models import engine, Add_Organizer, Add_Attendee, database_create, Add_Speaker, Add_Event, Add_Talk
-from venv.models import Event_List, add_to_event, atd_event_search, atd_talk_search, talk_list, update_talk, message_sent
+from venv.models import Event_List, add_to_event, atd_event_search, atd_talk_search, talk_list, update_talk
+from venv.models import message_sent, spkr_list, update_talk_title
 from venv.views import *
-from sqlalchemy import insert, select
 from sqlalchemy.orm import sessionmaker
 import os
 
@@ -86,9 +86,19 @@ def cms():
                 input()
 
         elif chs==7:
-            Guidelines()
+            details = update_talk(1, '')
+            lt = spkr_list(details[0], details[1])
+            details = update_talk(2, lt)
+            if not details == 0:
+                cmt = update_talk_title(details[0],details[1])
+                os.system('cls')
+                print(cmt)
+                input()
 
         elif chs==8:
+            Guidelines()
+
+        elif chs==9:
             break
 
         else:

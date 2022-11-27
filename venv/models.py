@@ -304,3 +304,31 @@ def message_sent(tk_id):
             os.system('cls')
             print ('Mr. ',atd.attend_name,', Please note that Talk Name:',tk_nm, 'has been rescheduled' )
             input()
+
+def spkr_list(spk_name, spk_pass):
+    spk_chk = 0
+    spk_id = 0
+    lt = []
+    spk = session.query(Speaker).filter(Speaker.spk_name == spk_name, Speaker.spk_pass == spk_pass).first()
+    if spk:
+        spk_id = spk.id
+        spk_chk = 1
+
+    if spk_chk == 1:
+        tks = session.query(Talk).filter(Talk.tk_spkr == spk_id)
+        for tk in tks:
+            if tk:
+                lt.append([tk.id, tk.tk_name, tk.tk_sdt, tk.tk_edt])
+
+        return lt
+
+    else:
+        os.system('cls')
+        print ('Speaker name / pass code not found')
+        input()
+
+def update_talk_title(tk_id, nw_title):
+    session.query(Talk).filter(Talk.id == tk_id).update({'tk_name': nw_title})
+    session.commit()
+    cmt = 'Title updated successfully'
+    return cmt
