@@ -7,10 +7,10 @@ def Menu():
     print('Welcome to Conference Management System')
     print('-----------------------------------------')
     print('1. Register yourself!!!!')
-    print('2. Register for an Event')
-    print('3. Create new event')
-    print('4. Add new Talk to existing event')
-    print('5. Check schedule of registered events')
+    print('2. Register to a conference')
+    print('3. Create new conference')
+    print('4. Add new Talk to existing conference')
+    print('5. Check schedule of registered conference')
     print('6. Change talk schedule')
     print('7. Update Talk title')
     print('8. Guidelines for using the software')
@@ -26,9 +26,9 @@ def Guidelines():
     print('                         General guidelines for usage')
     print('------------------------------------------------------------------------')
     print('1. To use the software, you have to register with a name and passcode')
-    print('2. There is no login page, but you will be asked for your passcode for \n event creation / registration')
-    print('3. For creating event / talk register as "Organizer"')
-    print('4. For registering to an event, register as "Attendee"')
+    print('2. There is no login page, but you will be asked for your passcode for \n conference creation / registration')
+    print('3. For creating conference / talk register as "Organizer"')
+    print('4. For registering to an conference, register as "Attendee"')
     print('5. For creating talks, ask the concerned speaker to register first')
     print('6. Remember your passcode')
     print('----------------------------------')
@@ -55,27 +55,27 @@ def Register():
     pass_code= input()
     return typ, name, pass_code
 
-def Add_New_Event():
+def Add_New_Conference():
     os.system('cls')
     print('----------------------------------')
     print('     Conference Management System')
     print('----------------------------------')
-    print('     Event addition')
+    print('     conference addition')
     print('----------------------------------')
-    print('Mention Event Name: ')
-    ev_name = input()
-    print('Mention Event Start Date: (YYYY-MM-DT)')
-    ev_sdate = input()
-    print('Mention Event End Date: (YYYY-MM-DT)')
-    ev_edate = input()
+    print('Mention Conference Name: ')
+    cn_name = input()
+    print('Mention Conference Start Date: (YYYY-MM-DT)')
+    cn_sdate = input()
+    print('Mention Conference End Date: (YYYY-MM-DT)')
+    cn_edate = input()
     print('Enter your name: ')
     og_name= input()
     print('Enter your passcode: ')
     og_pass= input()
-    ev_sdate = datetime.strptime(ev_sdate, '%Y-%m-%d').date()
-    ev_edate = datetime.strptime(ev_edate, '%Y-%m-%d').date()
+    cn_sdate = datetime.strptime(cn_sdate, '%Y-%m-%d').date()
+    cn_edate = datetime.strptime(cn_edate, '%Y-%m-%d').date()
 
-    return ev_name, ev_sdate, ev_edate, og_name, og_pass
+    return cn_name, cn_sdate, cn_edate, og_name, og_pass
 
 def Add_New_Talk():
     os.system('cls')
@@ -84,8 +84,8 @@ def Add_New_Talk():
     print('----------------------------------')
     print('     Talk addition')
     print('----------------------------------')
-    print('Mention Event Name: ')
-    ev_name = input()
+    print('Mention Conference Name: ')
+    cn_name = input()
     print('Mention Talk Name: ')
     tk_name = input()
     print('Mention Speaker Name: ')
@@ -96,41 +96,41 @@ def Add_New_Talk():
     tk_sdt = input()
     print('Mention talk end time: (YYYY-MM-DT HH:MM)')
     tk_edt = input()
-    print('Enter event organizer name: ')
+    print('Enter conference organizer name: ')
     og_name= input()
     print('Enter organizer passcode: ')
     og_pass= input()
     tk_sdt = datetime.strptime(tk_sdt, '%Y-%m-%d %H:%M')
     tk_edt = datetime.strptime(tk_edt, '%Y-%m-%d %H:%M')
 
-    return ev_name, tk_name, room_no, spk_name, tk_sdt, tk_edt, og_name, og_pass
+    return cn_name, tk_name, room_no, spk_name, tk_sdt, tk_edt, og_name, og_pass
 
 
-def Reg_to_event(all_eves):
+def Reg_to_conference(all_cns):
     os.system('cls')
     print('----------------------------------')
     print('  Conference Management System')
     print('----------------------------------')
-    print('    Event Registration Screen')
+    print('  Conference Registration Screen')
     print('----------------------------------')
     print('ID   Name   Start Date    End Date')
-    for all_eve in all_eves:
-        print(all_eve.id,'  ',all_eve.ev_name,'  ',all_eve.ev_sdate, '  ',all_eve.ev_edate)
+    for all_cn in all_cns:
+        print(all_cn.id,'  ',all_cn.cn_name,'  ',all_cn.cn_sdate, '  ',all_cn.cn_edate)
     print('----------------------------------')
     print('Enter your name:')
     attend_name = input()
     print('Enter your passcode')
     attend_pass = input()
-    print('Enter event id for registration:')
-    ev_id = int(input())
-    return attend_name, attend_pass, ev_id
+    print('Enter conference id for registration:')
+    cn_id = int(input())
+    return attend_name, attend_pass, cn_id
 
-def event_schedule(stp, lt):
+def conference_schedule(stp, lt):
     os.system('cls')
     print('--------------------------------------------------------------')
     print('                Conference Management System')
     print('--------------------------------------------------------------')
-    print('                   Event schedule search')
+    print('                Conference schedule search')
     print('--------------------------------------------------------------')
         
     if stp == 1:
@@ -148,8 +148,8 @@ def event_schedule(stp, lt):
             for a in range(sz):
                 print(lt[a][0],' ', lt[a][1],' ', lt[a][2],' ', lt[a][3])
             print('----------------------------------')
-            print('Choose event id for displaying schedule:')
-            ev_id = int(input())
+            print('Choose conference id for displaying schedule:')
+            cn_id = int(input())
             print('Choose method for search (1: date, 2: room #)')
             sr_md = int(input())
             if sr_md == 1:
@@ -158,7 +158,7 @@ def event_schedule(stp, lt):
             elif sr_md == 2:
                 print('Mention Room #:')
                 sr_par = input()
-            return ev_id, sr_md, sr_par
+            return cn_id, sr_md, sr_par
         print('----------------------------------')
         input()
         return 0
@@ -192,7 +192,7 @@ def change_schedule(stp, lt):
 
     elif stp == 2:
         if lt:
-            print('Event Name   Talk ID Talk Name    Room #   Speaker Name      Start Time       End Time')
+            print('Conference Name   Talk ID Talk Name    Room #   Speaker Name      Start Time       End Time')
             print('--------------------------------------------------------------------------------')
             sz = len(lt)
             for a in range(sz):
