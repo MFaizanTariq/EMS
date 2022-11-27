@@ -4,7 +4,7 @@ from datetime import datetime
 def Menu():
     os.system('cls')
     print('-----------------------------------------')
-    print('Welcome to Concordia Conference System')
+    print(' Welcome to Concordia Conference System')
     print('-----------------------------------------')
     print('1. Register yourself!!!!')
     print('2. Register to a conference')
@@ -15,6 +15,8 @@ def Menu():
     print('7. Update Talk title')
     print('8. Guidelines for using the software')
     print('9. Exit')
+    print('-----------------------------------------')
+    print('Choose your option:')
     chs = int(input ())
     return chs
 
@@ -31,7 +33,7 @@ def Guidelines():
     print('4. For registering to an conference, register as "Attendee"')
     print('5. For creating talks, ask the concerned speaker to register first')
     print('6. Remember your passcode')
-    print('----------------------------------')
+    print('------------------------------------------------------------------------')
     print('Press any key to continue')
     input ()
     return
@@ -48,6 +50,7 @@ def Register():
     print('1. Organizer: ')
     print('2. Attendee: ')
     print('3. Speaker: ')
+    print('-----------------------------------------')
     typ= int(input())
     print('Enter name: ')
     name= input()
@@ -108,15 +111,18 @@ def Add_New_Talk():
 
 def Reg_to_Conference(all_cns):
     os.system('cls')
-    print('----------------------------------')
-    print('  Concordia Conference System')
-    print('----------------------------------')
-    print('  Registration to a conference')
-    print('----------------------------------')
-    print('ID   Name   Start Date    End Date')
+    print('---------------------------------------------------')
+    print('         Concordia Conference System')
+    print('---------------------------------------------------')
+    print('         Registration to a conference')
+    print('---------------------------------------------------')
+    print('               Conference List')
+    print('  ID        Name       Start Date      End Date')
+    print('---------------------------------------------------')
+
     for all_cn in all_cns:
         print(all_cn.id,'  ',all_cn.cn_name,'  ',all_cn.cn_sdate, '  ',all_cn.cn_edate)
-    print('----------------------------------')
+    print('----------------------------------------------------')
     print('Enter your name:')
     attend_name = input()
     print('Enter your passcode')
@@ -127,11 +133,11 @@ def Reg_to_Conference(all_cns):
 
 def Conference_Schedule(stp, lt):
     os.system('cls')
-    print('--------------------------------------------------------------')
-    print('                Concordia Conference System')
-    print('--------------------------------------------------------------')
-    print('                    Conference schedule')
-    print('--------------------------------------------------------------')
+    print('--------------------------------------------------------------------------')
+    print('                       Concordia Conference System')
+    print('--------------------------------------------------------------------------')
+    print('                           Conference schedule')
+    print('--------------------------------------------------------------------------')
         
     if stp == 1:
         print('Enter your name:')
@@ -142,12 +148,12 @@ def Conference_Schedule(stp, lt):
 
     elif stp == 2:
         if lt:
-            print('ID #  Name   Start Date    End Date')
-            print('----------------------------------')
+            print('ID #     Conference Name          Start Date               End Date')
+            print('--------------------------------------------------------------------------')
             sz = len(lt)
             for a in range(sz):
                 print(lt[a][0],' ', lt[a][1],' ', lt[a][2],' ', lt[a][3])
-            print('----------------------------------')
+            print('--------------------------------------------------------------------------')
             print('Choose conference id for displaying schedule:')
             cn_id = int(input())
             print('Choose method for search (1: date, 2: room #)')
@@ -159,18 +165,18 @@ def Conference_Schedule(stp, lt):
                 print('Mention Room #:')
                 sr_par = input()
             return cn_id, sr_md, sr_par
-        print('----------------------------------')
+        print('--------------------------------------------------------------------------')
         input()
         return 0
 
     elif stp == 3:
         if lt:
-            print('Name      Room #  Speaker Name:          Start Time            End Time')
-            print('--------------------------------------------------------------------------------')
+            print('Talk Name      Room #  Speaker Name:         Start Time           End Time')
+            print('--------------------------------------------------------------------------')
             sz = len(lt)
             for a in range(sz):
                 print(lt[a][0],' ', lt[a][1],' ', lt[a][2],' ', lt[a][3],' ', lt[a][4])
-            print('--------------------------------------------------------------------------------')
+            print('--------------------------------------------------------------------------')
         print('--------------------------------------------------------------------------')
         input()
         return

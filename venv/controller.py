@@ -1,5 +1,5 @@
 from venv.models import engine, Database_Create, Organizer, Attendee, Speaker, Conference, Talk
-from venv.models import Add_to_Conference, Atd_Conference_Search, Talk_List, Send_Message, Spkr_List
+from venv.models import Add_to_Conference, Atd_Conference_Search, Talk_List, Send_Me    ssage, Spkr_List
 from venv.views import *
 from sqlalchemy.orm import sessionmaker
 import os

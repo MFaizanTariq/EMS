@@ -37,7 +37,8 @@ class Conference(Base):
         all_ogs = session.query(Organizer).all()
         for all_og in all_ogs:
             if og_name == all_og.og_name and og_pass == all_og.og_pass:
-                new_cn = Conference(cn_name=cn_name, cn_sdate=cn_sdate, cn_edate=cn_edate, cn_og=all_og.id)
+                new_cn = Conference(cn_name=cn_name, cn_sdate=cn_sdate,
+                                    cn_edate=cn_edate, cn_og=all_og.id)
                 session.add(new_cn)
                 session.commit()
                 return int(1)
@@ -253,7 +254,8 @@ def Add_to_Conference(attend_name, attend_pass, cn_id):
     return cmt
 
 def Atd_Conference_Search(attend_name, attend_pass):
-    attend = session.query(Attendee).filter(Attendee.attend_name == attend_name, Attendee.attend_pass == attend_pass).first()
+    attend = session.query(Attendee).filter(Attendee.attend_name == attend_name,
+                                    Attendee.attend_pass == attend_pass).first()
     lt = []
     if attend:
         cns = attend.cn_list
