@@ -1,10 +1,9 @@
 from sqlalchemy import create_engine, ForeignKey, Column, Date, Integer, String, DateTime
 from sqlalchemy.orm import relationship, backref, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-
+from datetime import datetime
 import os
 from os import path
-from datetime import datetime
 
 engine = create_engine('sqlite:///venv/EMS.db', echo=True)
 Base = declarative_base()
@@ -61,6 +60,7 @@ class Talk(Base):
     tk_cn = Column(Integer, ForeignKey('conference.id'), nullable=False)
     cvnt = relationship('Conference', backref='talk')
     spker = relationship('Speaker', backref='talk')
+
     def Add_Talk(cn_name, tk_name, room_no, spk_name, tk_sdt, tk_edt, og_name, og_pass):
         og_chk = 0
         og_chk_cmt = 'Organizer name / passcode not found'
@@ -121,7 +121,7 @@ class Talk(Base):
         cmt = og_chk_cmt + cn_chk_cmt + spk_chk_cmt + room_chk_cmt + cn_og_chk_cmt
         return cmt
 
-    def atd_talk_search(cn_id, sr_md, sr_par):
+    def Atd_Talk_Search(cn_id, sr_md, sr_par):
         lt = []
 
         if sr_md == 1:
@@ -146,7 +146,7 @@ class Talk(Base):
 
             return lt
 
-    def update_talk_time(tk_id, nw_sdt, nw_edt):
+    def Update_Talk_Time(tk_id, nw_sdt, nw_edt):
         tk = session.query(Talk).filter(Talk.id == tk_id).first()
         tk_cn = tk.tk_cn
         room_no = tk.tk_room
@@ -178,7 +178,7 @@ class Talk(Base):
         cmt = room_chk_cmt
         return cmt, 0
 
-    def update_talk_title(tk_id, nw_title):
+    def Update_Talk_Title(tk_id, nw_title):
         session.query(Talk).filter(Talk.id == tk_id).update({'tk_name': nw_title})
         session.commit()
         cmt = 'Title updated successfully'
@@ -219,16 +219,13 @@ class Conference_R_List(Base):
     attendee_id = Column(Integer, ForeignKey('attendee.id'), nullable=False)
 
 
-def database_create():
+def Database_Create():
     if not path.exists('venv/' + 'EMS.db'):
         Base.metadata.create_all(engine)
         print('Created Database!')
-     
 
 
-
-
-def add_to_conference(attend_name, attend_pass, cn_id):
+def Add_to_Conference(attend_name, attend_pass, cn_id):
     attend_chk = 0
     attend_chk_cmt = 'Attendee name / passcode not found'
     cn_chk = 0
@@ -255,7 +252,7 @@ def add_to_conference(attend_name, attend_pass, cn_id):
     cmt = attend_chk_cmt + cn_chk_cmt
     return cmt
 
-def atd_conference_search(attend_name, attend_pass):
+def Atd_Conference_Search(attend_name, attend_pass):
     attend = session.query(Attendee).filter(Attendee.attend_name == attend_name, Attendee.attend_pass == attend_pass).first()
     lt = []
     if attend:
@@ -270,7 +267,7 @@ def atd_conference_search(attend_name, attend_pass):
     return lt
 
 
-def talk_list(og_name, og_pass):
+def Talk_List(og_name, og_pass):
     og_chk = 0
     og_chk_cmt = 'Organizer name / passcode not found'
     og_id = 0
@@ -293,7 +290,7 @@ def talk_list(og_name, og_pass):
     return lt
 
 
-def message_sent(tk_id):
+def Send_Message(tk_id):
     tk = session.query(Talk).filter(Talk.id == tk_id).first()
     tk_cn = tk.tk_cn
     tk_nm = tk.tk_name
@@ -307,7 +304,7 @@ def message_sent(tk_id):
             print ('Mr. ',atd.attend_name,', Please note that Talk Name:',tk_nm, 'has been rescheduled' )
             input()
 
-def spkr_list(spk_name, spk_pass):
+def Spkr_List(spk_name, spk_pass):
     spk_chk = 0
     spk_id = 0
     lt = []

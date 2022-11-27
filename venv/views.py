@@ -4,7 +4,7 @@ from datetime import datetime
 def Menu():
     os.system('cls')
     print('-----------------------------------------')
-    print('Welcome to Conference Management System')
+    print('Welcome to Concordia Conference System')
     print('-----------------------------------------')
     print('1. Register yourself!!!!')
     print('2. Register to a conference')
@@ -21,9 +21,9 @@ def Menu():
 def Guidelines():
     os.system('cls')
     print('------------------------------------------------------------------------')
-    print('                     Welcome to Conference Management System')
+    print('                       Concordia Conference System')
     print('------------------------------------------------------------------------')
-    print('                         General guidelines for usage')
+    print('                       General guidelines for usage')
     print('------------------------------------------------------------------------')
     print('1. To use the software, you have to register with a name and passcode')
     print('2. There is no login page, but you will be asked for your passcode for \n conference creation / registration')
@@ -40,7 +40,7 @@ def Guidelines():
 def Register():
     os.system('cls')
     print('----------------------------------')
-    print('     Conference Management System')
+    print('   Concordia Conference System')
     print('----------------------------------')
     print('  Member registration screen')
     print('----------------------------------')
@@ -58,9 +58,9 @@ def Register():
 def Add_New_Conference():
     os.system('cls')
     print('----------------------------------')
-    print('     Conference Management System')
+    print('    Concordia Conference System')
     print('----------------------------------')
-    print('     conference addition')
+    print('     Conference creation')
     print('----------------------------------')
     print('Mention Conference Name: ')
     cn_name = input()
@@ -80,7 +80,7 @@ def Add_New_Conference():
 def Add_New_Talk():
     os.system('cls')
     print('----------------------------------')
-    print('     Conference Management System')
+    print('   Concordia Conference System')
     print('----------------------------------')
     print('     Talk addition')
     print('----------------------------------')
@@ -106,12 +106,12 @@ def Add_New_Talk():
     return cn_name, tk_name, room_no, spk_name, tk_sdt, tk_edt, og_name, og_pass
 
 
-def Reg_to_conference(all_cns):
+def Reg_to_Conference(all_cns):
     os.system('cls')
     print('----------------------------------')
-    print('  Conference Management System')
+    print('  Concordia Conference System')
     print('----------------------------------')
-    print('  Conference Registration Screen')
+    print('  Registration to a conference')
     print('----------------------------------')
     print('ID   Name   Start Date    End Date')
     for all_cn in all_cns:
@@ -125,12 +125,12 @@ def Reg_to_conference(all_cns):
     cn_id = int(input())
     return attend_name, attend_pass, cn_id
 
-def conference_schedule(stp, lt):
+def Conference_Schedule(stp, lt):
     os.system('cls')
     print('--------------------------------------------------------------')
-    print('                Conference Management System')
+    print('                Concordia Conference System')
     print('--------------------------------------------------------------')
-    print('                Conference schedule search')
+    print('                    Conference schedule')
     print('--------------------------------------------------------------')
         
     if stp == 1:
@@ -175,10 +175,10 @@ def conference_schedule(stp, lt):
         input()
         return
 
-def change_schedule(stp, lt):
+def Change_Schedule(stp, lt):
     os.system('cls')
     print('----------------------------------')
-    print('  Conference Management System')
+    print('  Concordia Conference System')
     print('----------------------------------')
     print('     Update talk time')
     print('----------------------------------')
@@ -209,10 +209,10 @@ def change_schedule(stp, lt):
             return tk_id, nw_sdt, nw_edt
         return 0
 
-def update_talk(stp, lt):
+def Update_Talk(stp, lt):
     os.system('cls')
     print('----------------------------------')
-    print('  Conference Management System')
+    print('  Concordia Conference System')
     print('----------------------------------')
     print('     Talk title update')
     print('----------------------------------')

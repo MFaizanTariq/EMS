@@ -1,6 +1,5 @@
-from venv.models import engine, Organizer, Attendee, database_create, Speaker, Conference, Talk
-from venv.models import add_to_conference, atd_conference_search, talk_list
-from venv.models import message_sent, spkr_list
+from venv.models import engine, Database_Create, Organizer, Attendee, Speaker, Conference, Talk
+from venv.models import Add_to_Conference, Atd_Conference_Search, Talk_List, Send_Message, Spkr_List
 from venv.views import *
 from sqlalchemy.orm import sessionmaker
 import os
@@ -9,7 +8,7 @@ Session = sessionmaker(bind = engine)
 session = Session()
 
 def cms():
-    database_create()
+    Database_Create()
 
     while True:
         chs = Menu()
@@ -33,8 +32,8 @@ def cms():
 
         elif chs==2:
             all_cns = Conference.Conference_List()
-            details = Reg_to_conference(all_cns)
-            res = add_to_conference(details[0], details[1], details[2])
+            details = Reg_to_Conference(all_cns)
+            res = Add_to_Conference(details[0], details[1], details[2])
             os.system('cls')
             print (res)
             print('\nEnter any key to continue... ')
@@ -61,36 +60,33 @@ def cms():
             input()
 
         elif chs==5:
-            stp = 1
             lt = []
-            details = conference_schedule(stp, '')
-            lt = atd_conference_search(details[0],details[1])
-            stp = 2
-            details = conference_schedule(stp, lt)
-            stp = 3
+            details = Conference_Schedule(1, '')
+            lt = Atd_Conference_Search(details[0],details[1])
+            details = Conference_Schedule(2, lt)
             if not details == 0:
-                lt = Talk.atd_talk_search(details[0],details[1],details[2])
-                conference_schedule(stp, lt)
+                lt = Talk.Atd_Talk_Search(details[0],details[1],details[2])
+                Conference_Schedule(3, lt)
 
         elif chs==6:
-            details = change_schedule(1, '')
-            lt = talk_list(details[0], details[1])
-            details = change_schedule(2, lt)
+            details = Change_Schedule(1, '')
+            lt = Talk_List(details[0], details[1])
+            details = Change_Schedule(2, lt)
             if not details == 0:
-                cmt = Talk.update_talk_time(details[0],details[1],details[2])
+                cmt = Talk.Update_Talk_Time(details[0],details[1],details[2])
                 os.system('cls')
                 print(cmt[0])
                 if cmt[1]==1:
-                    message_sent(cmt[2])
+                    Send_Message(cmt[2])
                     print('Email sent to attendees')
                 input()
 
         elif chs==7:
-            details = update_talk(1, '')
-            lt = spkr_list(details[0], details[1])
-            details = update_talk(2, lt)
+            details = Update_Talk(1, '')
+            lt = Spkr_List(details[0], details[1])
+            details = Update_Talk(2, lt)
             if not details == 0:
-                cmt = Talk.update_talk_title(details[0],details[1])
+                cmt = Talk.Update_Talk_Title(details[0],details[1])
                 os.system('cls')
                 print(cmt)
                 input()
