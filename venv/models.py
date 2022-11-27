@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, ForeignKey, Column, Date, Integer, String,
 from sqlalchemy.orm import relationship, backref, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
+import os
 from os import path
 from datetime import datetime
 
@@ -14,72 +15,49 @@ class Organizer(Base):
     __tablename__ = 'organizer'
 
     id = Column(Integer, primary_key=True)
-    og_name = Column(String(25))
-    og_pass = Column(String(15))
-
-    def __repr__(self, og_name):
-        self.og_name = og_name
+    og_name = Column(String(25), nullable=False)
+    og_pass = Column(String(15), nullable=False)
 
 class Event(Base):
     __tablename__ = 'event'
 
     id = Column(Integer, primary_key=True)
     ev_name = Column(String(20), unique=True)
-    ev_sdate = Column(Date)
-    ev_edate = Column(Date)
-    ev_og = Column(Integer, ForeignKey('organizer.id'),
-                            nullable=False)
+    ev_sdate = Column(Date, nullable=False)
+    ev_edate = Column(Date, nullable=False)
+    ev_og = Column(Integer, ForeignKey('organizer.id'), nullable=False)
     org = relationship('Organizer', backref='event')
     reg_list = relationship('Event_R_List', backref='event')
 
-    def __repr__(self, ev_name):
-        self.ev_name = ev_name
-
-    def search(self, sdate, edate, ev_sdate, ev_edate):
-        if ev_sdate >= sdate and ev_edate <= edate:
-            return 1
 
 class Talk(Base):
     __tablename__ = 'talk'
 
     id = Column(Integer, primary_key=True)
-    tk_name = Column(String(20))
-    tk_room = Column(Integer)
-    tk_spkr = Column(Integer, ForeignKey('speaker.id'),
-                      nullable=False)
-    tk_sdt = Column(DateTime)
-    tk_edt = Column(DateTime)
-    tk_ev = Column(Integer, ForeignKey('event.id'),
-                      nullable=False)
+    tk_name = Column(String(20), nullable=False)
+    tk_room = Column(Integer, nullable=False)
+    tk_spkr = Column(Integer, ForeignKey('speaker.id'), nullable=False)
+    tk_sdt = Column(DateTime, nullable=False)
+    tk_edt = Column(DateTime, nullable=False)
+    tk_ev = Column(Integer, ForeignKey('event.id'), nullable=False)
     evnt = relationship('Event', backref='talk')
-
     spker = relationship('Speaker', backref='talk')
-
-    def __repr__(self, tk_name):
-        self.tk_name = tk_name
-
-    def search(self, sdt, edt, tk_sdt, tk_edt):
-        if tk_sdt >= sdt and tk_edt <= edt:
-            return 1
 
 
 class Speaker(Base):
     __tablename__ = 'speaker'
 
     id = Column(Integer, primary_key=True)
-    spk_name = Column(String(50))
-    spk_pass = Column(String(20))
-
-    def __repr__(self, spk_name):
-        self.spk_name = spk_name
+    spk_name = Column(String(50), nullable=False)
+    spk_pass = Column(String(20), nullable=False)
 
 
 class Attendee(Base):
     __tablename__ = 'attendee'
 
     id = Column(Integer, primary_key=True)
-    attend_name = Column(String(50))
-    attend_pass = Column(String(20))
+    attend_name = Column(String(50), nullable=False)
+    attend_pass = Column(String(20), nullable=False)
     ev_list = relationship('Event_R_List', backref='attendee')
     tk_list = relationship('Talk_R_List', backref='attendee')
 
@@ -169,6 +147,9 @@ def Add_Talk(ev_name, tk_name, room_no, spk_name, tk_sdt, tk_edt, og_name, og_pa
                 elif tk_edt >= s_time and tk_edt <= e_time:
                     room_chk = 0
                     room_chk_cmt = ' Room not free in the selected time slot '
+                elif tk_sdt <= s_time and tk_edt >= e_time:
+                    room_chk = 0
+                    room_chk_cmt = ' Room not free in the selected time slot '
 
     spk = session.query(Speaker).filter(Speaker.spk_name == spk_name).first()
     if spk:
@@ -255,3 +236,71 @@ def atd_talk_search(ev_id, sr_md, sr_par):
                 lt.append([tk.tk_name, tk.tk_room, tk.spker.spk_name, tk.tk_sdt, tk.tk_edt])
 
         return lt
+
+def talk_list(og_name, og_pass):
+    og_chk = 0
+    og_chk_cmt = 'Organizer name / passcode not found'
+    og_id = 0
+    lt = []
+    og = session.query(Organizer).filter(Organizer.og_name == og_name, Organizer.og_pass == og_pass).first()
+    if og:
+        og_id = og.id
+        og_chk = 1
+        og_chk_cmt = ' '
+
+    evs = session.query(Event).filter(Event.ev_og == og_id)
+    for ev in evs:
+        if ev:
+            ev_id = ev.id
+            tks = session.query(Talk).filter(Talk.tk_ev == ev_id)
+            for tk in tks:
+                if tk:
+                    lt.append([ev.ev_name,tk.id ,tk.tk_name, tk.tk_room, tk.spker.spk_name, tk.tk_sdt, tk.tk_edt])
+
+    return lt
+
+def update_talk(tk_id, nw_sdt, nw_edt):
+    tk = session.query(Talk).filter(Talk.id == tk_id).first()
+    tk_ev = tk.tk_ev
+    room_no = tk.tk_room
+    room_chk = 1
+    room_chk_cmt = ' '
+
+    room_recs = session.query(Talk).filter(Talk.tk_ev == tk_ev, Talk.tk_room == room_no)
+
+    for room_rec in room_recs:
+        if room_rec:
+            s_time = room_rec.tk_sdt
+            e_time = room_rec.tk_edt
+            if nw_sdt >= s_time and nw_sdt <= e_time:
+                room_chk = 0
+                room_chk_cmt = ' Room not free in the selected time slot '
+            elif nw_edt >= s_time and nw_edt <= e_time:
+                room_chk = 0
+                room_chk_cmt = ' Room not free in the selected time slot '
+            elif nw_sdt <= s_time and nw_edt >= e_time:
+                room_chk = 0
+                room_chk_cmt = ' Room not free in the selected time slot '
+
+    if room_chk == 1:
+        session.query(Talk).filter(Talk.id == tk_id).update({'tk_sdt': nw_sdt, 'tk_edt': nw_edt})
+        session.commit()
+        cmt = 'Time update successfully'
+        res = 1
+        return cmt, res, tk_id
+    cmt = room_chk_cmt
+    return cmt, 0
+
+def message_sent(tk_id):
+    tk = session.query(Talk).filter(Talk.id == tk_id).first()
+    tk_ev = tk.tk_ev
+    tk_nm = tk.tk_name
+    attds = session.query(Event_R_List).filter(Event_R_List.ev_id == tk_ev)
+    for attd in attds:
+        print("")
+        if attd:
+            id = attd.attendee_id
+            atd = session.query(Attendee).filter(Attendee.id == id).first()
+            os.system('cls')
+            print ('Mr. ',atd.attend_name,', Please note that Talk Name:',tk_nm, 'has been rescheduled' )
+            input()

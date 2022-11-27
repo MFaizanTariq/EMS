@@ -1,5 +1,5 @@
-from venv.models import engine, Add_Organizer, Add_Attendee, database_create
-from venv.models import Add_Speaker, Add_Event, Add_Talk, Event_List, add_to_event, atd_event_search, atd_talk_search
+from venv.models import engine, Add_Organizer, Add_Attendee, database_create, Add_Speaker, Add_Event, Add_Talk
+from venv.models import Event_List, add_to_event, atd_event_search, atd_talk_search, talk_list, update_talk, message_sent
 from venv.views import *
 from sqlalchemy import insert, select
 from sqlalchemy.orm import sessionmaker
@@ -73,9 +73,22 @@ def cms():
                 event_schedule(stp, lt)
 
         elif chs==6:
-            Guidelines()
+            details = change_schedule(1, '')
+            lt = talk_list(details[0], details[1])
+            details = change_schedule(2, lt)
+            if not details == 0:
+                cmt = update_talk(details[0],details[1],details[2])
+                os.system('cls')
+                print(cmt[0])
+                if cmt[1]==1:
+                    message_sent(cmt[2])
+                    print('Email sent to attendees')
+                input()
 
         elif chs==7:
+            Guidelines()
+
+        elif chs==8:
             break
 
         else:

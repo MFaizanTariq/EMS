@@ -11,8 +11,9 @@ def Menu():
     print('3. Create new event')
     print('4. Add new Talk to existing event')
     print('5. Check schedule of registered events')
-    print('6. Guidelines for using the software')
-    print('7. Exit')
+    print('6. Change talk schedule')
+    print('7. Guidelines for using the software')
+    print('8. Exit')
     chs = int(input ())
     return chs
 
@@ -24,11 +25,11 @@ def Guidelines():
     print('                         General guidelines for usage')
     print('------------------------------------------------------------------------')
     print('1. To use the software, you have to register with a name and passcode')
-    print('2. There is no login page, but you could be asked for your passcode for \ncreation / registration')
+    print('2. There is no login page, but you will be asked for your passcode for \n event creation / registration')
     print('3. For creating event / talk register as "Organizer"')
     print('4. For registering to an event, register as "Attendee"')
-    print('5. Remember your passcode')
-    print('6. For creating talks, ask the concerned speaker to register first')
+    print('5. For creating talks, ask the concerned speaker to register first')
+    print('6. Remember your passcode')
     print('----------------------------------')
     print('Press any key to continue')
     input ()
@@ -90,9 +91,9 @@ def Add_New_Talk():
     spk_name = input()
     print('Choose room #: ')
     room_no = int(input())
-    print('Mention Event Start Time: (YYYY-MM-DT HH:MM)')
+    print('Mention talk start time: (YYYY-MM-DT HH:MM)')
     tk_sdt = input()
-    print('Mention Event End Time: (YYYY-MM-DT HH:MM)')
+    print('Mention talk end time: (YYYY-MM-DT HH:MM)')
     tk_edt = input()
     print('Enter event organizer name: ')
     og_name= input()
@@ -125,11 +126,11 @@ def Reg_to_event(all_eves):
 
 def event_schedule(stp, lt):
     os.system('cls')
-    print('----------------------------------')
-    print('  Conference Management System')
-    print('----------------------------------')
-    print('     Event schedule search')
-    print('----------------------------------')
+    print('--------------------------------------------------------------')
+    print('                Conference Management System')
+    print('--------------------------------------------------------------')
+    print('                   Event schedule search')
+    print('--------------------------------------------------------------')
         
     if stp == 1:
         print('Enter your name:')
@@ -163,12 +164,46 @@ def event_schedule(stp, lt):
 
     elif stp == 3:
         if lt:
-            print('Name   Room #    Speaker #      Start Time       End Time')
-            print('----------------------------------')
+            print('Name      Room #  Speaker Name:          Start Time            End Time')
+            print('--------------------------------------------------------------------------------')
             sz = len(lt)
             for a in range(sz):
                 print(lt[a][0],' ', lt[a][1],' ', lt[a][2],' ', lt[a][3],' ', lt[a][4])
-            print('----------------------------------')
-        print('----------------------------------')
+            print('--------------------------------------------------------------------------------')
+        print('--------------------------------------------------------------------------')
         input()
         return
+
+def change_schedule(stp, lt):
+    os.system('cls')
+    print('----------------------------------')
+    print('  Conference Management System')
+    print('----------------------------------')
+    print('     Event schedule search')
+    print('----------------------------------')
+
+    if stp == 1:
+        print('Enter your name:')
+        og_name = input()
+        print('Enter your passcode')
+        og_pass = input()
+        return og_name, og_pass
+
+    elif stp == 2:
+        if lt:
+            print('Event Name   Talk ID Talk Name    Room #   Speaker Name      Start Time       End Time')
+            print('--------------------------------------------------------------------------------')
+            sz = len(lt)
+            for a in range(sz):
+                print(lt[a][0], ' ', lt[a][1], ' ', lt[a][2], ' ', lt[a][3], ' ', lt[a][4], ' ', lt[a][5], ' ', lt[a][6])
+            print('--------------------------------------------------------------------------------')
+            print('Enter talk name for changing schedule')
+            tk_id = int(input())
+            print('Mention new start time: (YYYY-MM-DT HH:MM)')
+            nw_sdt = input()
+            print('Mention new end time: (YYYY-MM-DT HH:MM)')
+            nw_edt = input()
+            nw_sdt = datetime.strptime(nw_sdt, '%Y-%m-%d %H:%M')
+            nw_edt = datetime.strptime(nw_edt, '%Y-%m-%d %H:%M')
+            return tk_id, nw_sdt, nw_edt
+        return 0
